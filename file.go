@@ -1,6 +1,8 @@
 package gFile
 
-import "os"
+import (
+	"os"
+)
 
 func IsExists(path string) bool {
 	_, err := os.Stat(path)
@@ -11,6 +13,18 @@ func IsExists(path string) bool {
 		return false
 	}
 	return true
+}
+
+func CreateDirIfNotExists(dir string, perm os.FileMode) error {
+	exist := IsExists(dir)
+	if !exist {
+		err := os.Mkdir(dir, perm)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func IsDir(path string) bool {
